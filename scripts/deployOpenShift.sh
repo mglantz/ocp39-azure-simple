@@ -159,7 +159,7 @@ os_sdn_network_plugin_name='redhat/openshift-ovs-multitenant'
 
 # Enable CRI-O
 openshift_use_crio=true
-oreg_url=registry.access.redhat.com/openshift3/ose-${component}:${version}
+#oreg_url=registry.access.redhat.com/openshift3/ose-${component}:${version}
 
 # apply updated node defaults
 openshift_node_kubelet_args={'pods-per-core': ['10'], 'max-pods': ['250'], 'image-gc-high-threshold': ['90'], 'image-gc-low-threshold': ['80']}
@@ -264,7 +264,7 @@ os_sdn_network_plugin_name='redhat/openshift-ovs-multitenant'
 
 # Enable CRI-O
 openshift_use_crio=true
-oreg_url=registry.access.redhat.com/openshift3/ose-${component}:${version}
+#oreg_url=registry.access.redhat.com/openshift3/ose-${component}:${version}
 
 # apply updated node defaults
 openshift_node_kubelet_args={'pods-per-core': ['10'], 'max-pods': ['250'], 'image-gc-high-threshold': ['90'], 'image-gc-low-threshold': ['80']}
