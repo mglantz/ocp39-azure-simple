@@ -123,7 +123,7 @@ echo "VG=docker-vg" >> /etc/sysconfig/docker-storage-setup
 echo "WIPE_SIGNATURES=true" >> /etc/sysconfig/docker-storage-setup
 echo "STORAGE_DRIVER=overlay2" >> /etc/sysconfig/docker-storage-setup
 echo "CONTAINER_ROOT_LV_NAME=dockerlv" >> /etc/sysconfig/docker-storage-setup
-echo "CONTAINER_ROOT_LV_MOUNT_PATH=/var/lib/docker" >> /etc/sysconfig/docker-storage-setup
+# echo "CONTAINER_ROOT_LV_MOUNT_PATH=/var/lib/docker" >> /etc/sysconfig/docker-storage-setup
 
 docker-storage-setup
 if [ $? -eq 0 ]
