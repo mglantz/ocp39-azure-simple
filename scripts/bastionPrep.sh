@@ -81,6 +81,8 @@ else
 	fi
 fi
 
+# Disable extras from Azure RHUI
+yum-config-manager --disable rhui-rhel-7-server-rhui-extras-rpms
 
 # Install base packages and update system to latest packages
 echo $(date) " - Install base packages and update system to latest packages"

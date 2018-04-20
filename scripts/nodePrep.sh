@@ -81,6 +81,11 @@ else
 	fi
 fi
 
+# Disable extras from Azure RHUI
+yum-config-manager --disable rhui-rhel-7-server-rhui-extras-rpms
+
+# Disable extras from Azure RHUI
+yum-config-manager --disable rhui-rhel-7-server-rhui-extras-rpms
 
 # Install and enable Cockpit
 echo $(date) " - Installing and enabling Cockpit"
