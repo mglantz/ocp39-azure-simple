@@ -397,24 +397,8 @@ chmod a+r /tmp/hosts
 runuser -l $SUDOUSER -c "ansible-playbook ~/preinstall.yml"
 
 # Prometheus bugfix: https://bugzilla.redhat.com/show_bug.cgi?id=1563494
-
-cat << EOF > /usr/share/ansible/openshift-ansible/roles/openshift_prometheus/vars/default_images.yml
----
-# image prefix defaults
-l_openshift_prometheus_image_prefix: "{{ openshift_prometheus_image_prefix | default('openshift/') }}"
-l_openshift_prometheus_proxy_image_prefix: "{{ openshift_prometheus_proxy_image_prefix | default(l_openshift_prometheus_image_prefix) }}"
-l_openshift_prometheus_alertmanager_image_prefix: "{{ openshift_prometheus_altermanager_image_prefix | default(l_openshift_prometheus_image_prefix) }}"
-l_openshift_prometheus_alertbuffer_image_prefix: "{{ openshift_prometheus_alertbuffer_image_prefix | default(l_openshift_prometheus_image_prefix) }}"
-l_openshift_prometheus_node_exporter_image_prefix: "{{ openshift_prometheus_node_exporter_image_prefix | default(l_openshift_prometheus_image_prefix) }}"
-
-# image version defaults
-l_openshift_prometheus_image_version: "{{ openshift_prometheus_image_version | default('v3.9.14-2') }}"
-l_openshift_prometheus_proxy_image_version: "{{ openshift_prometheus_proxy_image_version | default('v3.9.14-2') }}"
-
-l_openshift_prometheus_alertmanager_image_version: "{{ openshift_prometheus_alertmanager_image_version | default('v3.9.14-2') }}"
-l_openshift_prometheus_alertbuffer_image_version: "{{ openshift_prometheus_alertbuffer_image_version | default('v3.9.14-2') }}"
-l_openshift_prometheus_node_exporter_image_version: "{{ openshift_prometheus_node_exporter_image_version | default('v3.9.14-2') }}"
-EOF
+sed -i 's/v0.15.2/v3.9.14-2/g' /usr/share/ansible/openshift-ansible/roles/openshift_prometheus/files/node-exporter-template.yaml
+sed -i -e 's/v2.0.0/v3.9.14-2/' -e 's/v1.0.0/v3.9.14-2/' -e 's/v0.0.2/v3.9.14-2/' -e 's/v0.15.2/v3.9.14-2/' -e 's/v0.13.0/v3.9.14-2/' /usr/share/ansible/openshift-ansible/roles/openshift_prometheus/vars/default_images.yml
 
 # Initiating installation of OpenShift Container Platform using Ansible Playbook
 echo $(date) " - Installing OpenShift Container Platform via Ansible Playbook"
@@ -485,12 +469,18 @@ then
 		runuser -l $SUDOUSER -c "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $item 'sudo sed -i \"s/OPENSHIFT_DEFAULT_REGISTRY/#OPENSHIFT_DEFAULT_REGISTRY/g\" /etc/sysconfig/atomic-openshift-master-controllers'"
 		runuser -l $SUDOUSER -c "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $item 'sudo systemctl restart atomic-openshift-master-api'"
 		runuser -l $SUDOUSER -c "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $item 'sudo systemctl restart atomic-openshift-master-controllers'"
+        # Prometheus bugfix: https://bugzilla.redhat.com/show_bug.cgi?id=1563494
+        runuser -l $SUDOUSER -c "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $item 'sudo sed -i \"s/v0.15.2/v3.9.14-2/g\" /usr/share/ansible/openshift-ansible/roles/openshift_prometheus/files/node-exporter-template.yaml'"
+        runuser -l $SUDOUSER -c "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $item 'sudo sed -i -e \"s/v2.0.0/v3.9.14-2/\" -e \"s/v1.0.0/v3.9.14-2/\" -e \"s/v0.0.2/v3.9.14-2/\" -e \"s/v0.15.2/v3.9.14-2/\" -e \"s/v0.13.0/v3.9.14-2/\" /usr/share/ansible/openshift-ansible/roles/openshift_prometheus/vars/default_images.yml'"
 	done
 else
 	runuser -l $SUDOUSER -c "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ocpm-0 'sudo sed -i \"s/OPENSHIFT_DEFAULT_REGISTRY/#OPENSHIFT_DEFAULT_REGISTRY/g\" /etc/sysconfig/atomic-openshift-master-api'"
 	runuser -l $SUDOUSER -c "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ocpm-0 'sudo sed -i \"s/OPENSHIFT_DEFAULT_REGISTRY/#OPENSHIFT_DEFAULT_REGISTRY/g\" /etc/sysconfig/atomic-openshift-master-controllers'"
 	runuser -l $SUDOUSER -c "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ocpm-0 'sudo systemctl restart atomic-openshift-master-api'"
 	runuser -l $SUDOUSER -c "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ocpm-0 'sudo systemctl restart atomic-openshift-master-controllers'"
+	# Prometheus bugfix: https://bugzilla.redhat.com/show_bug.cgi?id=1563494
+        runuser -l $SUDOUSER -c "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ocpm-0 'sudo sed -i \"s/v0.15.2/v3.9.14-2/g\" /usr/share/ansible/openshift-ansible/roles/openshift_prometheus/files/node-exporter-template.yaml'"
+        runuser -l $SUDOUSER -c "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ocpm-0 'sudo sed -i -e \"s/v2.0.0/v3.9.14-2/\" -e \"s/v1.0.0/v3.9.14-2/\" -e \"s/v0.0.2/v3.9.14-2/\" -e \"s/v0.15.2/v3.9.14-2/\" -e \"s/v0.13.0/v3.9.14-2/\" /usr/share/ansible/openshift-ansible/roles/openshift_prometheus/vars/default_images.yml'"
 fi
 
 echo $(date) " - Script complete"
