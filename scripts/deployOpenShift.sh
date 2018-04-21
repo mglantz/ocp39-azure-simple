@@ -161,6 +161,17 @@ os_sdn_network_plugin_name='redhat/openshift-ovs-multitenant'
 openshift_use_crio=true
 #oreg_url=registry.access.redhat.com/openshift3/ose-${component}:${version}
 
+# Deploy Prometheus
+openshift_hosted_prometheus_deploy=true
+openshift_prometheus_namespace=openshift-metrics
+openshift_prometheus_node_selector={"region":"infra"}
+openshift_prometheus_storage_kind=nfs
+openshift_prometheus_alertmanager_storage_kind=nfs
+openshift_prometheus_alertbuffer_storage_kind=nfs
+openshift_prometheus_storage_type=pvc
+openshift_prometheus_alertmanager_storage_type=pvc
+openshift_prometheus_alertbuffer_storage_type=pvc
+
 # apply updated node defaults
 openshift_node_kubelet_args={'pods-per-core': ['10'], 'max-pods': ['250'], 'image-gc-high-threshold': ['90'], 'image-gc-low-threshold': ['80']}
 
