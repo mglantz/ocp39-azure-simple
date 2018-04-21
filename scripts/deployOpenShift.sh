@@ -400,6 +400,7 @@ runuser -l $SUDOUSER -c "ansible-playbook ~/preinstall.yml"
 # ...Locally
 sed -i 's/v0.15.2/v3.9.14-2/g' /usr/share/ansible/openshift-ansible/roles/openshift_prometheus/files/node-exporter-template.yaml
 sed -i -e 's/v2.0.0/v3.9.14-2/' -e 's/v1.0.0/v3.9.14-2/' -e 's/v0.0.2/v3.9.14-2/' -e 's/v0.15.2/v3.9.14-2/' -e 's/v0.13.0/v3.9.14-2/' /usr/share/ansible/openshift-ansible/roles/openshift_prometheus/vars/default_images.yml
+sed -i 's/v0.15.2/v3.9.14-2/g' /usr/share/ansible/openshift-ansible/roles/openshift_prometheus/vars/openshift-enterprise.yml
 
 # ...On the masters
 if [ $MASTERCOUNT -ne 1 ]
@@ -408,11 +409,13 @@ then
   	      # Prometheus bugfix: https://bugzilla.redhat.com/show_bug.cgi?id=1563494
        	      runuser -l $SUDOUSER -c "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $item 'sudo sed -i \"s/v0.15.2/v3.9.14-2/g\" /usr/share/ansible/openshift-ansible/roles/openshift_prometheus/files/node-exporter-template.yaml'"
               runuser -l $SUDOUSER -c "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $item 'sudo sed -i -e \"s/v2.0.0/v3.9.14-2/\" -e \"s/v1.0.0/v3.9.14-2/\" -e \"s/v0.0.2/v3.9.14-2/\" -e \"s/v0.15.2/v3.9.14-2/\" -e \"s/v0.13.0/v3.9.14-2/\" /usr/share/ansible/openshift-ansible/roles/openshift_prometheus/vars/default_images.yml'"
+              runuser -l $SUDOUSER -c "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $item 'sudo sed -i \"s/v0.15.2/v3.9.14-2/g\" /usr/share/ansible/openshift-ansible/roles/openshift_prometheus/vars/openshift-enterprise.yml'"
         done
 else
         # Prometheus bugfix: https://bugzilla.redhat.com/show_bug.cgi?id=1563494
         runuser -l $SUDOUSER -c "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ocpm-0 'sudo sed -i \"s/v0.15.2/v3.9.14-2/g\" /usr/share/ansible/openshift-ansible/roles/openshift_prometheus/files/node-exporter-template.yaml'"
         runuser -l $SUDOUSER -c "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ocpm-0 'sudo sed -i -e \"s/v2.0.0/v3.9.14-2/\" -e \"s/v1.0.0/v3.9.14-2/\" -e \"s/v0.0.2/v3.9.14-2/\" -e \"s/v0.15.2/v3.9.14-2/\" -e \"s/v0.13.0/v3.9.14-2/\" /usr/share/ansible/openshift-ansible/roles/openshift_prometheus/vars/default_images.yml'"
+        runuser -l $SUDOUSER -c "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ocpm-0 'sudo sed -i \"s/v0.15.2/v3.9.14-2/g\" /usr/share/ansible/openshift-ansible/roles/openshift_prometheus/vars/openshift-enterprise.yml'"
 fi
 
 # Initiating installation of OpenShift Container Platform using Ansible Playbook
