@@ -1,5 +1,7 @@
 # OpenShift Container Platform 3.9 with Username / Password authentication for OpenShift
 
+Based on work at https://github.com/haroldwongms/openshift-containerplatform
+
 ## To deploy a cluster with a one-liner using deploy.sh
 
 The script will run on a Linux server or on MacOS. Possibly it will run in a bash shell in Windows 10.
