@@ -396,6 +396,26 @@ chmod a+r /tmp/hosts
 # Create correct hosts file on all servers
 runuser -l $SUDOUSER -c "ansible-playbook ~/preinstall.yml"
 
+# Prometheus bugfix: https://bugzilla.redhat.com/show_bug.cgi?id=1563494
+
+cat << EOF > /usr/share/ansible/openshift-ansible/roles/openshift_prometheus/vars/default_images.yml
+---
+# image prefix defaults
+l_openshift_prometheus_image_prefix: "{{ openshift_prometheus_image_prefix | default('openshift/') }}"
+l_openshift_prometheus_proxy_image_prefix: "{{ openshift_prometheus_proxy_image_prefix | default(l_openshift_prometheus_image_prefix) }}"
+l_openshift_prometheus_alertmanager_image_prefix: "{{ openshift_prometheus_altermanager_image_prefix | default(l_openshift_prometheus_image_prefix) }}"
+l_openshift_prometheus_alertbuffer_image_prefix: "{{ openshift_prometheus_alertbuffer_image_prefix | default(l_openshift_prometheus_image_prefix) }}"
+l_openshift_prometheus_node_exporter_image_prefix: "{{ openshift_prometheus_node_exporter_image_prefix | default(l_openshift_prometheus_image_prefix) }}"
+
+# image version defaults
+l_openshift_prometheus_image_version: "{{ openshift_prometheus_image_version | default('v3.9.14-2') }}"
+l_openshift_prometheus_proxy_image_version: "{{ openshift_prometheus_proxy_image_version | default('v3.9.14-2') }}"
+
+l_openshift_prometheus_alertmanager_image_version: "{{ openshift_prometheus_alertmanager_image_version | default('v3.9.14-2') }}"
+l_openshift_prometheus_alertbuffer_image_version: "{{ openshift_prometheus_alertbuffer_image_version | default('v3.9.14-2') }}"
+l_openshift_prometheus_node_exporter_image_version: "{{ openshift_prometheus_node_exporter_image_version | default('v3.9.14-2') }}"
+EOF
+
 # Initiating installation of OpenShift Container Platform using Ansible Playbook
 echo $(date) " - Installing OpenShift Container Platform via Ansible Playbook"
 
