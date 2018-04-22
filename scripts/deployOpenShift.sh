@@ -159,7 +159,6 @@ os_sdn_network_plugin_name='redhat/openshift-ovs-multitenant'
 
 # Enable CRI-O
 openshift_use_crio=true
-#oreg_url=registry.access.redhat.com/openshift3/ose-${component}:${version}
 
 # Deploy Prometheus
 openshift_hosted_prometheus_deploy=true
@@ -219,7 +218,6 @@ openshift_logging_storage_labels={'storage': 'logging'}
 openshift_logging_kibana_hostname=kibana.$ROUTING
 openshift_logging_master_public_url=https://$MASTERPUBLICIPHOSTNAME:8443
 
-
 # Setup storage for etcd2, for the new Service Broker
 openshift_hosted_etcd_storage_kind=nfs
 openshift_hosted_etcd_storage_nfs_options="*(rw,root_squash,sync,no_wdelay)"
@@ -277,7 +275,17 @@ os_sdn_network_plugin_name='redhat/openshift-ovs-multitenant'
 
 # Enable CRI-O
 openshift_use_crio=true
-#oreg_url=registry.access.redhat.com/openshift3/ose-${component}:${version}
+
+# Deploy Prometheus
+openshift_hosted_prometheus_deploy=true
+openshift_prometheus_namespace=openshift-metrics
+openshift_prometheus_node_selector={"region":"infra"}
+openshift_prometheus_storage_kind=nfs
+openshift_prometheus_alertmanager_storage_kind=nfs
+openshift_prometheus_alertbuffer_storage_kind=nfs
+openshift_prometheus_storage_type=pvc
+openshift_prometheus_alertmanager_storage_type=pvc
+openshift_prometheus_alertbuffer_storage_type=pvc
 
 # apply updated node defaults
 openshift_node_kubelet_args={'pods-per-core': ['10'], 'max-pods': ['250'], 'image-gc-high-threshold': ['90'], 'image-gc-low-threshold': ['80']}
@@ -304,8 +312,6 @@ openshift_hosted_registry_storage_volume_size=5Gi
 
 # Setup metrics
 openshift_hosted_metrics_deploy=true
-# As of this writing, there's a bug in the metrics deployment.
-# You'll see the metrics failing to deploy 59 times, it will, though, succeed the 60'th time.
 openshift_hosted_metrics_storage_kind=nfs
 openshift_hosted_metrics_storage_access_modes=['ReadWriteOnce']
 openshift_hosted_metrics_storage_host=$MASTER-0.$DOMAIN
