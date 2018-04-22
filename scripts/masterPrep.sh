@@ -58,7 +58,7 @@ fi
 # Disable all repositories and enable only the required ones
 echo $(date) " - Disabling all repositories and enabling only the required repos"
 
-subscription-manager repos --disable="*"
+subscription-manager repos --disable="*" || subscription-manager repos --disable="*"
 
 subscription-manager repos \
     --enable="rhel-7-server-rpms" \
