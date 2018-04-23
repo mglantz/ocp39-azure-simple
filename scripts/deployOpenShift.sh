@@ -240,12 +240,12 @@ $MASTER-0.$DOMAIN
 
 # host group for nodes
 [nodes]
-$MASTER-0.$DOMAIN openshift_node_labels="{'region': 'master', 'zone': 'default', 'role': 'master'}"
+$MASTER-0.$DOMAIN openshift_node_labels="{'region': 'master', 'zone': 'default'}"
 # runtime: cri-o is a fix for https://bugzilla.redhat.com/show_bug.cgi?id=1553452
-$INFRA-0.$DOMAIN openshift_node_labels="{'region': 'infra', 'zone': 'default', 'runtime': 'cri-o', 'role': 'infra'}"
+$INFRA-0.$DOMAIN openshift_node_labels="{'region': 'infra', 'zone': 'default', 'runtime': 'cri-o'}"
 EOF
 for node in ocpn-{0..30}; do
-	echo $(ping -c 1 $node 2>/dev/null|grep ocp|grep PING|awk '{ print $2 }') openshift_node_labels=\"{\'region\': \'nodes\', \'zone\': \'default\', \'runtime\': \'cri-o\', \'role\': \'app\' }\"
+	echo $(ping -c 1 $node 2>/dev/null|grep ocp|grep PING|awk '{ print $2 }') openshift_node_labels=\"{\'region\': \'nodes\', \'zone\': \'default\', \'runtime\': \'cri-o\'}\"
 done|grep ocpn >>/etc/ansible/hosts
 
 else
@@ -371,14 +371,14 @@ $BASTION
 [nodes]
 EOF
 for node in ocpm-{0..3}; do
-	echo $(ping -c 1 $node 2>/dev/null|grep ocp|grep PING|awk '{ print $2 }') openshift_node_labels=\"{\'region\': \'master\', \'zone\': \'default\', \'role\': \'master\'}\"
+	echo $(ping -c 1 $node 2>/dev/null|grep ocp|grep PING|awk '{ print $2 }') openshift_node_labels=\"{\'region\': \'master\', \'zone\': \'default\'}\"
 done|grep ocpm >>/etc/ansible/hosts
 # runtime: cri-o is a fix for https://bugzilla.redhat.com/show_bug.cgi?id=1553452
 for node in ocpi-{0..30}; do
-        echo $(ping -c 1 $node 2>/dev/null|grep ocp|grep PING|awk '{ print $2 }') openshift_node_labels=\"{\'region\': \'infra\', \'zone\': \'default\', \'runtime\': \'cri-o\', \'role\': \'infra\' }\"
+        echo $(ping -c 1 $node 2>/dev/null|grep ocp|grep PING|awk '{ print $2 }') openshift_node_labels=\"{\'region\': \'infra\', \'zone\': \'default\', \'runtime\': \'cri-o\'}\"
 done|grep ocpi >>/etc/ansible/hosts
 for node in ocpn-{0..30}; do
-        echo $(ping -c 1 $node 2>/dev/null|grep ocp|grep PING|awk '{ print $2 }') openshift_node_labels=\"{\'region\': \'nodes\', \'zone\': \'default\', \'runtime\': \'cri-o\', \'role\': \'app\' }\"
+        echo $(ping -c 1 $node 2>/dev/null|grep ocp|grep PING|awk '{ print $2 }') openshift_node_labels=\"{\'region\': \'nodes\', \'zone\': \'default\', \'runtime\': \'cri-o\'}\"
 done|grep ocpn >>/etc/ansible/hosts
 fi
 
