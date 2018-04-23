@@ -214,7 +214,7 @@ openshift_logging_storage_nfs_directory=/exports
 openshift_logging_storage_nfs_options='*(rw,root_squash)'
 openshift_logging_storage_volume_name=logging
 openshift_logging_storage_volume_size=10Gi
-openshift_logging_storage_labels={'storage': 'logging'}
+#openshift_logging_storage_labels={'storage': 'logging'}
 openshift_logging_kibana_hostname=kibana.$ROUTING
 openshift_logging_master_public_url=https://$MASTERPUBLICIPHOSTNAME:8443
 
