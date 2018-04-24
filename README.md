@@ -1,5 +1,8 @@
 # OpenShift Container Platform 3.9 HA or non-HA with CRI-O on Azure
 
+Deploy an automated installation of OpenShift Container Platform 3.9 in HA or non-HA setup.
+With CRI-O and Prometheus out of the box.
+
 Based on work at https://github.com/haroldwongms/openshift-containerplatform
 
 ## To deploy a cluster with a one-liner using deploy.sh
