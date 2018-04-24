@@ -1,4 +1,4 @@
-# OpenShift Container Platform 3.9 with Username / Password authentication for OpenShift
+# OpenShift Container Platform 3.9 HA or non-HA with CRI-O on Azure
 
 Based on work at https://github.com/haroldwongms/openshift-containerplatform
 
