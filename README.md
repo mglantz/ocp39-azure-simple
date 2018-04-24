@@ -18,7 +18,7 @@ $ azure provider register --namespace "Microsoft.KeyVault"
 
 4. Download the repository:
 
-$ git clone https://github.com/mglantz/ocp37-azure-simple
+$ git clone https://github.com/mglantz/ocp39-azure-simple
 
 5. Edit deploy.cfg
 
